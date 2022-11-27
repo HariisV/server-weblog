@@ -6,6 +6,8 @@ const cors = require('cors');
 
 var app = express();
 
+const articleRouter = require('./app/api/post/router');
+
 const notFoundMiddleware = require('./app/middlewares/not-found');
 const handleErrorMiddleware = require('./app/middlewares/handler-error');
 
@@ -15,6 +17,11 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+
+app.listen(3000, () => {
+  console.log('RUN ON  PORT 300');
+});
+app.use('/article', articleRouter);
 
 app.use(notFoundMiddleware);
 app.use(handleErrorMiddleware);

@@ -5,12 +5,12 @@ const errorHandlerMiddleware = (err, req, res, next) => {
     msg: err.message || 'Internal Server Error',
   };
 
-  // if (err.name === 'ValidationError') {
-  //   customError.msg = Object.values(err.errors)
-  //     .map((item) => item.message)
-  //     .join(', ');
-  //   customError.statusCode = 400;
-  // }
+  if (err.name === 'SequelizeValidationError') {
+    customError.msg = Object.values(err.errors)
+      .map((item) => item.message)
+      .join(', ');
+    customError.statusCode = 400;
+  }
   return res.status(customError.statusCode).json({ msg: customError.msg });
 };
 
